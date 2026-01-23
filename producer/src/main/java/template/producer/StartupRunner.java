@@ -13,13 +13,12 @@ import template.model.Item;
 @RequiredArgsConstructor
 public class StartupRunner implements CommandLineRunner {
 
-    private final ItemEventPublisher itemEventPublisher;
+    private final ItemService itemService;
 
     @Override
     public void run(String... args) {
         var item = Item.builder().id("1").build();
-        itemEventPublisher.publishItemCreated(item);
-        log.info("ItemCreatedEvent published on startup");
+        itemService.createItem(item);
     }
 
 }
