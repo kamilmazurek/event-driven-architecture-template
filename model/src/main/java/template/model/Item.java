@@ -11,4 +11,6 @@ public class Item {
 
     private final String id;
 
+    private final String name;
+
 }

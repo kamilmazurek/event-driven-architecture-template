@@ -9,7 +9,8 @@ import template.model.ItemCreatedEvent;
 public class ItemCreatedEventHandler {
 
     public void handle(ItemCreatedEvent event) {
-        log.info("Item {} created", event.getItem().getId());
+        var item = event.getItem();
+        log.info("Created item with id {} and name {}", item.getId(), item.getName());
     }
 
 }
