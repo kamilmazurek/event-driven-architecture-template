@@ -27,16 +27,10 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-        <!-- Internal modules -->
+        <!-- Internal module -->
         <dependency>
             <groupId>template</groupId>
             <artifactId>model</artifactId>
-        </dependency>
-
-        <!-- Serialization -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
 
         <!-- Lombok -->
