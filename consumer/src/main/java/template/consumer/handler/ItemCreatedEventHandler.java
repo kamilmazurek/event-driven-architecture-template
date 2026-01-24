@@ -1,8 +1,8 @@
-package template.consumer;
+package template.consumer.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import template.model.ItemCreatedEvent;
+import template.model.event.ItemCreatedEvent;
 
 @Slf4j
 @Service

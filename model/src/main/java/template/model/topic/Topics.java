@@ -1,4 +1,4 @@
-package template.model;
+package template.model.topic;
 
 public final class Topics {
 
