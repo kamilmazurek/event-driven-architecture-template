@@ -1,10 +1,10 @@
-package template.producer;
+package template.consumer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProducerApplicationTest {
+class ConsumerApplicationIT {
 
     @Test
     void shouldStartContext() {
