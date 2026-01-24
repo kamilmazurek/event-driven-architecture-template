@@ -3,10 +3,10 @@ package template.producer.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import template.model.Item;
-import template.model.ItemCreatedEvent;
+import template.model.domain.Item;
+import template.model.event.ItemCreatedEvent;
 import template.producer.publisher.ItemEventPublisher;
-import template.producer.model.CreateItemDTO;
+import template.producer.dto.CreateItemDTO;
 
 import static java.util.UUID.randomUUID;
 

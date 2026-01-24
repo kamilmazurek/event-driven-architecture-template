@@ -1,11 +1,12 @@
-package template.consumer;
+package template.consumer.listener;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import template.model.ItemCreatedEvent;
+import template.consumer.handler.ItemCreatedEventHandler;
+import template.model.event.ItemCreatedEvent;
 
-import static template.model.Topics.ITEM_CREATED;
+import static template.model.topic.Topics.ITEM_CREATED;
 
 @Component
 @RequiredArgsConstructor

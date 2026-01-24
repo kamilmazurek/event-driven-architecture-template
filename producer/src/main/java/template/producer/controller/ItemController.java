@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import template.model.Item;
+import template.model.domain.Item;
 import template.producer.service.ItemService;
-import template.producer.model.CreateItemDTO;
-import template.producer.model.ItemDTO;
+import template.producer.dto.CreateItemDTO;
+import template.producer.dto.ItemDTO;
 
 import static org.springframework.http.HttpStatus.CREATED;
 

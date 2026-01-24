@@ -1,4 +1,4 @@
-package template.model;
+package template.model.domain;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,10 +7,10 @@ import lombok.extern.jackson.Jacksonized;
 @Data
 @Builder
 @Jacksonized
-public class ItemCreatedEvent {
+public class Item {
 
-    private final String eventId;
+    private final String id;
 
-    private final Item item;
+    private final String name;
 
 }

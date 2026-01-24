@@ -1,4 +1,4 @@
-package template.producer.model;
+package template.producer.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
