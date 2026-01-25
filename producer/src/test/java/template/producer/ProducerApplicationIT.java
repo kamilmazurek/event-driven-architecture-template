@@ -1,10 +1,8 @@
 package template.producer;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ProducerApplicationIT {
+class ProducerApplicationIT extends AbstractIT {
 
     @Test
     void shouldStartContext() {
