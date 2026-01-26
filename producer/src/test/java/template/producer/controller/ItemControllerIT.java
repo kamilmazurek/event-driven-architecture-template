@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import template.model.event.ItemCreatedEvent;
-import template.producer.AbstractIT;
+import template.test.AbstractIT;
 import template.producer.dto.CreateItemDTO;
 
 import java.util.List;

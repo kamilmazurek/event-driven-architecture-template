@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>template</groupId>
-    <artifactId>event-driven-architecture-template</artifactId>
+    <artifactId>event-driven-architecture-template-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>event-driven-architecture-template</name>
-    <description>event-driven-architecture-template</description>
+    <name>event-driven-architecture-template-parent</name>
+    <description>event-driven-architecture-template-parent</description>
 
     <properties>
         <java.version>21</java.version>
@@ -25,6 +24,7 @@
         <module>model</module>
         <module>producer</module>
         <module>consumer</module>
+        <module>test</module>
     </modules>
 
     <dependencyManagement>
@@ -33,6 +33,12 @@
                 <groupId>template</groupId>
                 <artifactId>model</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>template</groupId>
+                <artifactId>test</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import template.model.domain.Item;
 import template.model.event.ItemCreatedEvent;
-import template.producer.AbstractIT;
+import template.test.AbstractIT;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package template.producer;
+package template.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
