@@ -1,4 +1,4 @@
-package template.producer;
+package template.test;
 
 import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
