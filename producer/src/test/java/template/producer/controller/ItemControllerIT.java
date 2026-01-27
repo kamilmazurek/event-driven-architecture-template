@@ -9,7 +9,9 @@ import template.model.event.ItemCreatedEvent;
 import template.test.AbstractIT;
 import template.producer.dto.CreateItemDTO;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
@@ -50,7 +52,7 @@ public class ItemControllerIT extends AbstractIT {
         assertNotNull(itemId);
 
         //and event has been sent to Kafka
-        var record = KafkaTestUtils.getSingleRecord(consumer, ITEM_CREATED);
+        var record = KafkaTestUtils.getSingleRecord(consumer, ITEM_CREATED, Duration.ofSeconds(5));
         var event = record.value();
 
         assertEquals(itemId, event.getItem().getId());
@@ -58,8 +60,9 @@ public class ItemControllerIT extends AbstractIT {
     }
 
     @AfterEach
-    void cleanUp() {
+    void cleanUp() throws ExecutionException, InterruptedException {
         consumer.close();
+        deleteTopic(ITEM_CREATED);
     }
 
 }

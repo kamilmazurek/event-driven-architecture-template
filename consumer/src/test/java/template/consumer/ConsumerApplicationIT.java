@@ -1,12 +1,9 @@
 package template.consumer;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import template.test.AbstractIT;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class ConsumerApplicationIT {
+class ConsumerApplicationIT extends AbstractIT {
 
     @Test
     void shouldStartContext() {

@@ -6,10 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import template.model.event.ItemCreatedEvent;
-import template.test.AbstractIT;
 import template.producer.dto.CreateItemDTO;
+import template.test.AbstractIT;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -42,7 +44,7 @@ public class ItemServiceIT extends AbstractIT {
         assertEquals(dto.name(), createdItem.getName());
 
         //and event has been sent to Kafka
-        var record = getSingleRecord(consumer, ITEM_CREATED);
+        var record = getSingleRecord(consumer, ITEM_CREATED, Duration.ofSeconds(5));
 
         assertEquals(createdItem.getId(), record.key());
         assertEquals(createdItem.getName(), record.value().getItem().getName());
@@ -50,8 +52,9 @@ public class ItemServiceIT extends AbstractIT {
     }
 
     @AfterEach
-    void cleanUp() {
+    void cleanUp() throws ExecutionException, InterruptedException {
         consumer.close();
+        deleteTopic(ITEM_CREATED);
     }
 
 }
