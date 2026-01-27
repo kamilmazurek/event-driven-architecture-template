@@ -9,7 +9,9 @@ import template.model.domain.Item;
 import template.model.event.ItemCreatedEvent;
 import template.test.AbstractIT;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,14 +43,15 @@ public class ItemEventPublisherIT extends AbstractIT {
         publisher.publish(event);
 
         //then event has been sent to Kafka
-        var record = getSingleRecord(consumer, ITEM_CREATED);
+        var record = getSingleRecord(consumer, ITEM_CREATED, Duration.ofSeconds(5));
         assertEquals(item.getId(), record.key());
         assertEquals(item.getName(), record.value().getItem().getName());
     }
 
     @AfterEach
-    void cleanUp() {
+    void cleanUp() throws ExecutionException, InterruptedException {
         consumer.close();
+        deleteTopic(ITEM_CREATED);
     }
 
 }
