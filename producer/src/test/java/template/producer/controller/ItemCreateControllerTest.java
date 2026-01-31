@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 
-class ItemControllerTest {
+class ItemCreateControllerTest {
 
     @Test
     void shouldCreateItem() {
@@ -23,7 +23,7 @@ class ItemControllerTest {
         var itemService = mock(ItemService.class);
 
         //and controller
-        var controller = new ItemController(itemService);
+        var controller = new ItemCreateController(itemService);
 
         //and service can create item based on DTO
         var item = Item.builder().id(randomUUID().toString()).name(dto.name()).build();

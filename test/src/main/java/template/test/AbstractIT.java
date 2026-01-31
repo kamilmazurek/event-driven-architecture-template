@@ -3,8 +3,11 @@ package template.test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +38,15 @@ public abstract class AbstractIT {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private static AdminClient adminClient;
+
+    @BeforeAll
+    static void initAdminClient() {
+        var props = new HashMap<String, Object>();
+        props.put(BOOTSTRAP_SERVERS_CONFIG, KafkaTestContainer.bootstrapServers());
+        adminClient = AdminClient.create(props);
+    }
+
     @BeforeEach
     void setUp() {
         RestAssured.port = this.port;
@@ -57,20 +69,35 @@ public abstract class AbstractIT {
         return new KafkaConsumer<>(props, stringDeserializer, jsonDeserializer);
     }
 
+    protected boolean topicExists(String topicName) throws ExecutionException, InterruptedException {
+        return adminClient.listTopics().names().get().contains(topicName);
+    }
+
+    protected void createTopicIfNotExists(String topicName) throws ExecutionException, InterruptedException {
+        if (!topicExists(topicName)) {
+            adminClient.createTopics(List.of(new NewTopic(topicName, 1, (short) 1))).all().get();
+        }
+    }
+
     protected void deleteTopic(String topicName) throws ExecutionException, InterruptedException {
         deleteTopics(List.of(topicName));
     }
 
     protected void deleteTopics(List<String> topicNames) throws ExecutionException, InterruptedException {
-        try (var admin = createAdminClient()) {
-            admin.deleteTopics(topicNames).all().get();
+        adminClient.deleteTopics(topicNames).all().get();
+    }
+
+    protected void deleteTopicIfExists(String topicName) throws ExecutionException, InterruptedException {
+        if (topicExists(topicName)) {
+            deleteTopic(topicName);
         }
     }
 
-    private AdminClient createAdminClient() {
-        var props = new HashMap<String, Object>();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, KafkaTestContainer.bootstrapServers());
-        return AdminClient.create(props);
+    @AfterAll
+    static void closeAdminClient() {
+        if (adminClient != null) {
+            adminClient.close();
+        }
     }
 
 }
