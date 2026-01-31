@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.kafka.core.KafkaTemplate;
+import template.consumer.AbstractConsumerIT;
 import template.model.domain.Item;
 import template.model.event.ItemCreatedEvent;
-import template.test.AbstractIT;
 
 import java.time.Duration;
 
@@ -18,11 +18,10 @@ import static org.awaitility.Awaitility.await;
 import static template.model.topic.Topics.ITEM_CREATED;
 
 @ExtendWith(OutputCaptureExtension.class)
-public class ItemEventListenerIT extends AbstractIT {
+public class ItemEventListenerIT extends AbstractConsumerIT {
 
     @Autowired
     private KafkaTemplate<String, ItemCreatedEvent> kafkaTemplate;
-
 
     @Test
     void shouldReceiveItemCreatedEvent(CapturedOutput output) {

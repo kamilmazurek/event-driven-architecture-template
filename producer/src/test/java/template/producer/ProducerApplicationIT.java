@@ -1,9 +1,8 @@
 package template.producer;
 
 import org.junit.jupiter.api.Test;
-import template.test.AbstractIT;
 
-class ProducerApplicationIT extends AbstractIT {
+class ProducerApplicationIT extends AbstractProducerIT {
 
     @Test
     void shouldStartContext() {

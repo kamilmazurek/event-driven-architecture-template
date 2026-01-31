@@ -7,28 +7,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import template.model.domain.Item;
-import template.producer.service.ItemService;
+import template.model.dto.ItemDTO;
 import template.producer.dto.CreateItemDTO;
-import template.producer.dto.ItemDTO;
+import template.producer.service.ItemService;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
-public class ItemController {
+public class ItemCreateController {
 
     private final ItemService itemService;
 
     @PostMapping
     public ResponseEntity<ItemDTO> createItem(@Valid @RequestBody CreateItemDTO createItemDTO) {
         var createdItem = itemService.createItem(createItemDTO);
-        return ResponseEntity.status(CREATED).body(toDTO(createdItem));
-    }
-
-    private ItemDTO toDTO(Item item) {
-        return new ItemDTO(item.getId(), item.getName());
+        return ResponseEntity.status(CREATED).body(ItemDTO.fromItem(createdItem));
     }
 
 }
