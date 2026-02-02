@@ -15,6 +15,8 @@
     <properties>
         <java.version>21</java.version>
         <spring-boot.version>3.5.10</spring-boot.version>
+        <allure.version>2.29.0</allure.version>
+        <allure.maven.plugin.version>2.12.0</allure.maven.plugin.version>
         <maven.compiler.plugin.version>3.12.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
@@ -46,6 +48,12 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-junit5</artifactId>
+                <version>${allure.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -87,6 +95,14 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-maven</artifactId>
+                    <version>${allure.maven.plugin.version}</version>
+                    <configuration>
+                        <reportVersion>${allure.version}</reportVersion>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
