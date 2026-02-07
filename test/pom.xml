@@ -34,7 +34,7 @@
         <!-- Internal -->
         <dependency>
             <groupId>template</groupId>
-            <artifactId>model</artifactId>
+            <artifactId>commons</artifactId>
         </dependency>
         <!-- Lombok -->
         <dependency>

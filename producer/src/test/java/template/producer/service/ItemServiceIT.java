@@ -10,7 +10,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.getSingleRecord;
-import static template.model.topic.Topics.ITEM_CREATED;
+import static template.commons.model.topic.Topics.ITEM_CREATED;
 
 public class ItemServiceIT extends AbstractProducerIT {
 

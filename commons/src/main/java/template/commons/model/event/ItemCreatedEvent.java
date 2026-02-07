@@ -1,9 +1,9 @@
-package template.model.event;
+package template.commons.model.event;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
-import template.model.domain.Item;
+import template.commons.model.domain.Item;
 
 @Data
 @Builder

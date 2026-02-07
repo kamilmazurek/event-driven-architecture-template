@@ -2,8 +2,8 @@ package template.consumer.handler;
 
 import org.junit.jupiter.api.Test;
 import template.consumer.store.ItemStore;
-import template.model.domain.Item;
-import template.model.event.ItemCreatedEvent;
+import template.commons.model.domain.Item;
+import template.commons.model.event.ItemCreatedEvent;
 
 import static java.util.UUID.randomUUID;
 import static org.mockito.Mockito.mock;

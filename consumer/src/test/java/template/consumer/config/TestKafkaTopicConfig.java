@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
-import static template.model.topic.Topics.ITEM_CREATED;
+import static template.commons.model.topic.Topics.ITEM_CREATED;
 
 @Configuration
 public class TestKafkaTopicConfig {

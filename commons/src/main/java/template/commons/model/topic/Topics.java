@@ -1,4 +1,4 @@
-package template.model.topic;
+package template.commons.model.topic;
 
 public final class Topics {
 

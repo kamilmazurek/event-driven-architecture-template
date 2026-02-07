@@ -1,7 +1,7 @@
 package template.consumer.store;
 
 import org.springframework.stereotype.Component;
-import template.model.domain.Item;
+import template.commons.model.domain.Item;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

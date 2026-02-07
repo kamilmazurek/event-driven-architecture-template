@@ -2,7 +2,7 @@ package template.producer.service;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import template.model.event.ItemCreatedEvent;
+import template.commons.model.event.ItemCreatedEvent;
 import template.producer.dto.CreateItemDTO;
 import template.producer.publisher.ItemEventPublisher;
 
