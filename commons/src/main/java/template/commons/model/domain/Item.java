@@ -1,4 +1,4 @@
-package template.model.domain;
+package template.commons.model.domain;
 
 import lombok.Builder;
 import lombok.Data;

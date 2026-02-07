@@ -23,7 +23,7 @@
     </properties>
 
     <modules>
-        <module>model</module>
+        <module>commons</module>
         <module>producer</module>
         <module>consumer</module>
         <module>test</module>
@@ -33,7 +33,7 @@
         <dependencies>
             <dependency>
                 <groupId>template</groupId>
-                <artifactId>model</artifactId>
+                <artifactId>commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -3,8 +3,8 @@ package template.producer.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import template.model.domain.Item;
-import template.model.event.ItemCreatedEvent;
+import template.commons.model.domain.Item;
+import template.commons.model.event.ItemCreatedEvent;
 import template.producer.publisher.ItemEventPublisher;
 import template.producer.dto.CreateItemDTO;
 

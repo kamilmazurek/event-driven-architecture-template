@@ -3,7 +3,7 @@ package template.consumer.controller;
 
 import org.junit.jupiter.api.Test;
 import template.consumer.store.ItemStore;
-import template.model.domain.Item;
+import template.commons.model.domain.Item;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package template.consumer.store;
 
 import org.junit.jupiter.api.Test;
-import template.model.domain.Item;
+import template.commons.model.domain.Item;
 
 import java.util.List;
 

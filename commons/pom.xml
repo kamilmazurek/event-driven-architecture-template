@@ -11,10 +11,20 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>model</artifactId>
+    <artifactId>commons</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Sprig Boot Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Spring Kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
         <!-- Serialization -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

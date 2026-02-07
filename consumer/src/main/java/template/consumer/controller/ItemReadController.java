@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import template.consumer.store.ItemStore;
-import template.model.dto.ItemDTO;
+import template.commons.model.dto.ItemDTO;
 
 import java.util.List;
 

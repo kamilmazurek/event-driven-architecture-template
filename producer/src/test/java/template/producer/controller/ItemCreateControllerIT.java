@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.HttpStatus.CREATED;
-import static template.model.topic.Topics.ITEM_CREATED;
+import static template.commons.model.topic.Topics.ITEM_CREATED;
 
 public class ItemCreateControllerIT extends AbstractProducerIT {
 

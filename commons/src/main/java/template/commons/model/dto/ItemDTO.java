@@ -1,7 +1,7 @@
-package template.model.dto;
+package template.commons.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import template.model.domain.Item;
+import template.commons.model.domain.Item;
 
 public record ItemDTO(@NotBlank String id, @NotBlank String name) {
 

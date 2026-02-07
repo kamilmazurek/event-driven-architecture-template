@@ -7,15 +7,15 @@ import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 import template.consumer.AbstractConsumerIT;
-import template.model.domain.Item;
-import template.model.event.ItemCreatedEvent;
+import template.commons.model.domain.Item;
+import template.commons.model.event.ItemCreatedEvent;
 
 import java.time.Duration;
 
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
-import static template.model.topic.Topics.ITEM_CREATED;
+import static template.commons.model.topic.Topics.ITEM_CREATED;
 
 @ExtendWith(OutputCaptureExtension.class)
 public class ItemEventListenerIT extends AbstractConsumerIT {

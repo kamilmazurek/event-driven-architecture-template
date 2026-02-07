@@ -1,7 +1,7 @@
 package template.producer.controller;
 
 import org.junit.jupiter.api.Test;
-import template.model.domain.Item;
+import template.commons.model.domain.Item;
 import template.producer.dto.CreateItemDTO;
 import template.producer.service.ItemService;
 

@@ -1,4 +1,4 @@
-package template.producer.health;
+package template.commons.health;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.health.Health;
@@ -16,9 +16,10 @@ import static org.apache.kafka.clients.admin.AdminClientConfig.RETRIES_CONFIG;
 import static org.springframework.boot.actuate.health.Health.down;
 import static org.springframework.boot.actuate.health.Health.up;
 
+
 @Component("kafka")
 @RequiredArgsConstructor
-public class KafkaHealthIndicatorTemplate implements HealthIndicator {
+public class EdaKafkaHealthIndicator implements HealthIndicator {
 
     private final KafkaAdmin kafkaAdmin;
 

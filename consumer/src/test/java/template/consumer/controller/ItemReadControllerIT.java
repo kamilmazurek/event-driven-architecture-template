@@ -3,8 +3,8 @@ package template.consumer.controller;
 
 import org.junit.jupiter.api.Test;
 import template.consumer.AbstractConsumerIT;
-import template.model.domain.Item;
-import template.model.dto.ItemDTO;
+import template.commons.model.domain.Item;
+import template.commons.model.dto.ItemDTO;
 
 import static io.restassured.RestAssured.given;
 import static java.util.UUID.randomUUID;

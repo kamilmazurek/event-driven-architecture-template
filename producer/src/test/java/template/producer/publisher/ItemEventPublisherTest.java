@@ -2,13 +2,13 @@ package template.producer.publisher;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.kafka.core.KafkaTemplate;
-import template.model.domain.Item;
-import template.model.event.ItemCreatedEvent;
+import template.commons.model.domain.Item;
+import template.commons.model.event.ItemCreatedEvent;
 
 import static java.util.UUID.randomUUID;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static template.model.topic.Topics.ITEM_CREATED;
+import static template.commons.model.topic.Topics.ITEM_CREATED;
 
 class ItemEventPublisherTest {
 
