@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
-import template.consumer.AbstractConsumerIT;
+import template.consumer.AbstractConsumerIntegrationTest;
 import template.commons.model.domain.Item;
 import template.commons.model.dto.ItemDTO;
 import template.commons.model.event.ItemCreatedEvent;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static template.commons.model.topic.Topics.ITEM_CREATED;
 
-public class ItemCreatedEventHandlerIT extends AbstractConsumerIT {
+public class ItemCreatedEventHandlerIntegrationTest extends AbstractConsumerIntegrationTest {
 
     @Autowired
     private KafkaTemplate<String, ItemCreatedEvent> kafkaTemplate;

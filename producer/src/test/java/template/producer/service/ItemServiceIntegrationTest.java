@@ -2,7 +2,7 @@ package template.producer.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import template.producer.AbstractProducerIT;
+import template.producer.AbstractProducerIntegrationTest;
 import template.producer.dto.CreateItemDTO;
 
 import java.time.Duration;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.getSingleRecord;
 import static template.commons.model.topic.Topics.ITEM_CREATED;
 
-public class ItemServiceIT extends AbstractProducerIT {
+public class ItemServiceIntegrationTest extends AbstractProducerIntegrationTest {
 
     @Autowired
     private ItemService itemService;

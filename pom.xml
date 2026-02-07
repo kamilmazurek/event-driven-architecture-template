@@ -82,6 +82,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire.plugin.version}</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>**/*IntegrationTest.java</exclude>
+                        </excludes>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -93,6 +98,11 @@
                                 <goal>integration-test</goal>
                                 <goal>verify</goal>
                             </goals>
+                            <configuration>
+                                <includes>
+                                    <include>**/*IntegrationTest.java</include>
+                                </includes>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

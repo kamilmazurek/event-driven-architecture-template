@@ -2,7 +2,7 @@ package template.producer.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
-import template.producer.AbstractProducerIT;
+import template.producer.AbstractProducerIntegrationTest;
 import template.producer.dto.CreateItemDTO;
 
 import java.time.Duration;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.HttpStatus.CREATED;
 import static template.commons.model.topic.Topics.ITEM_CREATED;
 
-public class ItemCreateControllerIT extends AbstractProducerIT {
+public class ItemCreateControllerIntegrationTest extends AbstractProducerIntegrationTest {
 
     @Test
     void shouldCreateItemAndPublishEvent() {
