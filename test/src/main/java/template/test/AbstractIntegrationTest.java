@@ -30,7 +30,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Testcontainers
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public abstract class AbstractIT {
+public abstract class AbstractIntegrationTest {
 
     @LocalServerPort
     private int port;
