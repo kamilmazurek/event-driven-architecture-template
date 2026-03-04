@@ -17,21 +17,21 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
   producer:
-    image: event-driven-template-producer:latest
+    image: template/event-driven-template-producer
     container_name: producer
     depends_on:
       - kafka
     ports:
-      - "9080:8080"
+      - "8080:8080"
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
   consumer:
-    image: event-driven-template-consumer:latest
+    image: template/event-driven-template-consumer
     container_name: consumer
     depends_on:
       - kafka
     ports:
-      - "9081:8081"
+      - "8081:8081"
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
