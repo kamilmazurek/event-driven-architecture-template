@@ -25,9 +25,9 @@ class ItemCreateControllerTest {
         //and controller
         var controller = new ItemCreateController(itemService);
 
-        //and service can create item based on DTO
+        //and service can create item based on information from DTO
         var item = Item.builder().id(randomUUID().toString()).name(dto.name()).build();
-        when(itemService.createItem(dto)).thenReturn(item);
+        when(itemService.createItem(dto.name())).thenReturn(item);
 
         //when request is handled
         var response = controller.createItem(dto);
@@ -41,7 +41,7 @@ class ItemCreateControllerTest {
         assertEquals(dto.name(), body.name());
 
         //and service was involved in creating item
-        verify(itemService).createItem(dto);
+        verify(itemService).createItem(dto.name());
     }
 
 }

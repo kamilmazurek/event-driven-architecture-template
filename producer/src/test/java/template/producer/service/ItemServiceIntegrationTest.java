@@ -23,7 +23,7 @@ public class ItemServiceIntegrationTest extends AbstractProducerIntegrationTest 
         var dto = new CreateItemDTO("Item A");
 
         //when item is created
-        var createdItem = itemService.createItem(dto);
+        var createdItem = itemService.createItem(dto.name());
 
         //then item with id is returned
         assertNotNull(createdItem.getId());

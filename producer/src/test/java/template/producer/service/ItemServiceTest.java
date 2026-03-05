@@ -25,7 +25,7 @@ class ItemServiceTest {
         var service = new ItemService(publisher);
 
         //when item is created
-        var item = service.createItem(dto);
+        var item = service.createItem(dto.name());
 
         //then item is returned
         assertEquals(dto.name(), item.getName());
