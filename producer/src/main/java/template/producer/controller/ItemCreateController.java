@@ -22,7 +22,7 @@ public class ItemCreateController {
 
     @PostMapping
     public ResponseEntity<ItemDTO> createItem(@Valid @RequestBody CreateItemDTO createItemDTO) {
-        var createdItem = itemService.createItem(createItemDTO);
+        var createdItem = itemService.createItem(createItemDTO.name());
         return ResponseEntity.status(CREATED).body(ItemDTO.fromItem(createdItem));
     }
 
