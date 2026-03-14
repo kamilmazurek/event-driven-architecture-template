@@ -1,4 +1,5 @@
 version: '3.9'
+
 services:
   kafka:
     image: apache/kafka:3.9.1
@@ -17,8 +18,11 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
   producer:
-    image: template/event-driven-template-producer
     container_name: producer
+    build:
+      context: ./producer
+      dockerfile: Dockerfile
+    image: template/event-driven-template-producer
     depends_on:
       - kafka
     ports:
@@ -27,8 +31,11 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
   consumer:
-    image: template/event-driven-template-consumer
     container_name: consumer
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    image: template/event-driven-template-consumer
     depends_on:
       - kafka
     ports:
