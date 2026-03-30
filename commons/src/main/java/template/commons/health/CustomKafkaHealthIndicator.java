@@ -19,7 +19,7 @@ import static org.springframework.boot.actuate.health.Health.up;
 
 @Component("kafka")
 @RequiredArgsConstructor
-public class EdaKafkaHealthIndicator implements HealthIndicator {
+public class CustomKafkaHealthIndicator implements HealthIndicator {
 
     private final KafkaAdmin kafkaAdmin;
 
