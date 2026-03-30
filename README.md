@@ -14,6 +14,19 @@ Key advantages:
 
 The goal is to keep the template practical, clean, and easy to adapt, providing a solid foundation for building event-driven microservices.
 
+## Quickstart
+
+TODO
+
+## Table of Contents
+* [Motivation](#motivation)
+
+## Motivation
+
+Starting new event-driven microservices often involves repetitive setup.
+I wanted the ability to start quickly and considered creating a Maven Archetype to automate this, but it felt too costly compared to the benefits.
+Instead, to reduce the overhead of repeatedly creating project skeletons, I decided to create this template.
+
 ## Disclaimer
 
 THIS SOFTWARE AND ANY DOCUMENTATION INCLUDED IN THIS REPOSITORY AND CREATED BY THE AUTHOR
