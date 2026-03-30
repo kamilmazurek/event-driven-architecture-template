@@ -37,7 +37,7 @@
         <!-- Tests -->
         <dependency>
             <groupId>template</groupId>
-            <artifactId>test</artifactId>
+            <artifactId>test-commons</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- Allure Report -->

@@ -26,7 +26,7 @@
         <module>commons</module>
         <module>producer</module>
         <module>consumer</module>
-        <module>test</module>
+        <module>test-commons</module>
     </modules>
 
     <dependencyManagement>
@@ -38,7 +38,7 @@
             </dependency>
             <dependency>
                 <groupId>template</groupId>
-                <artifactId>test</artifactId>
+                <artifactId>test-commons</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>
