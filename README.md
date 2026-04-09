@@ -20,12 +20,45 @@ TODO
 
 ## Table of Contents
 * [Motivation](#motivation)
+* [Architecture Overview](#architecture-overview)
 
 ## Motivation
 
 Starting new event-driven microservices often involves repetitive setup.
 I wanted the ability to start quickly and considered creating a Maven Archetype to automate this, but it felt too costly compared to the benefits.
 Instead, to reduce the overhead of repeatedly creating project skeletons, I decided to create this template.
+
+## Architecture Overview
+
+Event-Driven Architecture (EDA) is a software design pattern in which components communicate asynchronously by producing and consuming events, rather than invoking each other directly.
+This approach allows services to operate independently, promotes loose coupling, improves scalability, and makes it easier to extend or modify individual components without impacting the rest of the system.
+EDA is particularly well-suited for distributed microservices, where responsiveness, resilience, and flexibility are critical.
+
+In this implementation, the architecture is centered around Kafka as the communication backbone.
+The image below illustrates the concept used in this project:
+
+### TODO: add image
+
+The main parts of this template include:
+* Producer
+    * Publishes domain events to Kafka topic when business actions occur.
+    * Converts internal domain changes into events that other services can consume.
+* Consumer
+    * Subscribes to the Kafka topic and processes events asynchronously.
+    * Encapsulates business logic triggered by incoming events while remaining decoupled from the producer.
+* Model
+    * Defines the event payloads and domain objects shared between producer and consumer.
+    * Ensures consistent data structure and serialization across services.
+* Broker (Apache Kafka)
+    * Serves as the messaging backbone, storing and delivering events to subscribed consumers.
+    * Supports decoupled communication, event replay, and scalability for producers and consumers.
+* Supporting Components
+    * Spring Boot Actuator for health checks.
+
+This template focuses on simplicity and clarity, providing a solid starting point for building event-driven microservices.
+While it currently supports a single producer and consumer, the structure is designed to be easily extended with additional services, topics, or event flows as your system grows.
+
+By following Event-Driven Architecture principles, the design ensures asynchronous communication, loose coupling, and clear separation of concerns, helping developers create scalable, resilient, and maintainable microservices.
 
 ## Disclaimer
 
