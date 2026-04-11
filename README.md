@@ -22,11 +22,13 @@ TODO
 * [Motivation](#motivation)
 * [Architecture Overview](#architecture-overview)
 * [Apache Kafka as the Event Backbone](#apache-kafka-as-the-event-backbone)
+* [Technology Stack](#technology-stack)
 
 ## Motivation
 
 Starting new event-driven microservices often involves repetitive setup.
 I wanted the ability to start quickly and considered creating a Maven Archetype to automate this, but it felt too costly compared to the benefits.
+I also tried AI/LLM-based solutions for generating project scaffolding, but they lacked determinism and sometimes produced unreliable results.
 Instead, to reduce the overhead of repeatedly creating project skeletons, I decided to create this template.
 
 ## Architecture Overview
@@ -90,7 +92,42 @@ These capabilities make Kafka particularly well suited for event-driven architec
 * **Loose coupling** - producers and consumers can evolve independently
 * **Event replay** - consumers can reprocess events by resetting offsets
 
-These features allow Kafka to act not only as a broker, but also as an event backbone for microservice ecosystems.
+With these features, Kafka can be used not only as a broker, but also as an event backbone for microservice ecosystems.
+
+## Technology Stack
+
+Event-Driven Architecture Template is built using Java and Spring Boot, providing a solid foundation for developing modular and production-ready microservices.
+The application follows an event-driven approach where services communicate asynchronously through a message broker rather than direct calls. This ensures loose coupling and independent scalability of components.
+
+Apache Kafka is used as the central event streaming platform, enabling reliable, high throughput communication between producers and consumers.
+Kafka allows services to publish events and react to them independently, which aligns naturally with the principles of Event-Driven Architecture.
+Spring for Apache Kafka simplifies integration, configuration, and message handling within the Spring ecosystem.
+
+Testing is a first-class concern in this stack. Unit tests focus on individual components such as event producers, consumers, and domain services, while integration tests verify message flow and interaction with Kafka.
+Maven Surefire and Failsafe plugins are preconfigured to ensure smooth execution of both unit and integration tests during the build process.
+
+Here is an overview of the technology stack:
+- **Language & Framework**
+  - **Java 21**: Modern Java version used to implement the application.
+  - **Spring Boot**: Framework for building standalone, production-ready Spring applications.
+  - **Spring for Apache Kafka**: Simplifies Kafka integration and event listener configuration.
+
+- **Messaging**
+  - **Apache Kafka**: Distributed event streaming platform enabling asynchronous communication between services.
+
+- **Testing**
+  - **JUnit**: Framework for writing unit tests in Java.
+  - **REST Assured**: Library for testing REST endpoints.
+  - **Mockito**: Mocking framework for isolating components during unit tests.
+  - **Testcontainers**: Provides lightweight, disposable Kafka instance for integration testing.
+  - **Allure Report**: Generates detailed and readable test reports.
+
+- **Build & Deployment**
+  - **Apache Maven**: Manages dependencies, builds, and test execution.
+  - **Docker**: Packages applications into containers for consistent deployment.
+
+This stack was selected to support asynchronous communication, scalability, and resilience.
+It balances simplicity for local development with the robustness required for real-world event driven systems, providing a strong foundation for building reactive and extensible microservices.
 
 ## Disclaimer
 
