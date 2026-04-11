@@ -24,6 +24,7 @@ TODO
 * [Apache Kafka as the Event Backbone](#apache-kafka-as-the-event-backbone)
 * [Technology Stack](#technology-stack)
 * [How It Works](#how-it-works)
+* [Build and Deployment](#build-and-deployment)
 
 ## Motivation
 
@@ -291,22 +292,140 @@ By separating write and read responsibilities, the system stays scalable, respon
 
 ### End-to-End Flow
 
-Creating an item:
-1. Client sends `HTTP POST` to Producer
-2. Producer starts processing the request, as it is received by the Controller
+The item creation flow looks as follows:
+```
+Client → Producer → Kafka → Consumer → Store
+```
+
+The item creation is triggered by sending a simple `POST` request to the Producer, for example:
+```shell
+curl -i -X POST http://localhost:8080/items -H "Content-Type: application/json" -d '{"name":"Item A"}'
+```
+
+The system then processes the request step by step:
+1. Client sends an `HTTP POST` request to the Producer
+2. Producer starts processing the request as it is received by the Controller
 3. Controller delegates creation to the Service
 4. Service creates the Item and publishes an event
-5. Event is sent to the Kafka topic
-6. Consumer starts processing the event, as it is received by the Listener
+5. The event is sent to the Kafka topic
+6. Consumer receives the event via the Listener
 7. Listener passes the event to the Handler
 8. Handler processes the event and updates the Store
 
-Reading data:
-1. Client sends `HTTP GET` to Consumer
-2. Consumer starts processing the request, as it is received by the Controller
-3. Controller reads data from the Store, which is updated as events are received and processed, then returns it in the response
+To verify that the item was processed, you can query the Consumer's data:
+```console
+http://localhost:8081/items
+```
+
+You can check the items by sending a GET request to this endpoint or simply opening it in a browser:
+1. Client sends an `HTTP GET` request to the Consumer
+2. Consumer processes the request via the Controller
+3. Controller reads data from the Store (updated by processed events)
+4. The response is returned to the client
 
 This flow demonstrates how an Event-Driven Architecture works in practice with Spring Boot and Kafka, supporting asynchronous communication, loose coupling, and a clear separation of responsibilities.
+
+## Build and Deployment
+
+The project is built with Apache Maven. A standard build compiles the project, runs both unit and integration tests, and installs the generated JAR files into the local Maven repository:
+```shell
+mvnw clean install
+```
+
+Integration tests executed during the build connect to an instance of Apache Kafka, which is automatically started in Docker using Testcontainers.
+
+If Docker is not available, or you prefer not to start the Kafka container during the build, it is possible to skip integration tests (however, this is not recommended):
+```shell
+mvnw clean install -DskipITs
+```
+
+### Running the Application Locally
+
+To run the application locally, an Apache Kafka instance is required.
+You can install and run Kafka manually or connect to an existing remote instance.
+For development and testing purposes, running Kafka in Docker is often the most convenient approach.
+
+The project includes a Docker Compose configuration that starts Kafka together with the Producer and Consumer services.
+
+The following command can be used to build the application and start all services:
+```shell
+mvnw clean package
+docker compose up --build
+```
+These commands will:
+* build the application
+* build Docker images for the Producer and Consumer
+* start Kafka and both services
+
+By default, the Producer runs on port 8080, and the Consumer runs on port 8081.
+
+You can quickly verify that it works. Start by sending a simple `POST` request to the Producer, for example:
+```shell
+curl -i -X POST http://localhost:8080/items -H "Content-Type: application/json" -d '{"name":"Item A"}'
+```
+
+Then check what items are available in the Consumer store:
+```console
+http://localhost:8081/items
+```
+
+By sending a `GET` request to this endpoint, or simply opening the URL in a browser, you should see the created items, for example:
+```json
+[
+  {
+    "id": "bc0ac641-b5f0-4e99-b067-926cead738f9",
+    "name": "Item A"
+  }
+]
+```
+
+### Running Services Step by Step
+
+If you need more control, the following commands allow you to run services step by step.
+You can start Kafka in Docker and run the Producer and Consumer directly using Spring Boot.
+
+First, run Apache Kafka in Docker:
+```shell
+docker run -p 9092:9092 -p 9093:9093 --name kafka apache/kafka:3.9.1
+```
+
+Then start the Producer and Consumer (in separate terminals):
+```shell
+cd producer
+mvnw spring-boot:run
+```
+```shell
+cd consumer
+mvnw spring-boot:run
+```
+
+### Running Packaged Applications
+
+Alternatively, you can build the project and run the generated JAR files. Build the project:
+```shell
+mvnw clean package
+```
+
+Then run Producer and Consumer (in separate terminals): 
+```shell
+java -jar producer/target/producer-1.0.0-SNAPSHOT.jar
+```
+```shell
+java -jar consumer/target/consumer-1.0.0-SNAPSHOT.jar
+```
+
+### Building Docker Images Manually
+
+If you want to build the Docker images without using Docker Compose, you can do it like this:
+```shell
+mvnw clean package
+docker build -t template/event-driven-template-producer -f producer/Dockerfile ./producer
+docker build -t template/event-driven-template-consumer -f consumer/Dockerfile ./consumer
+```
+Running these commands first builds the applications using Apache Maven and then produces Docker images for the Producer and Consumer.
+
+With these build and deployment options, you can easily build, test, and run the application locally or in Docker containers.
+The setup is flexible and can be adapted as your project grows or requirements change.
 
 ## Disclaimer
 
