@@ -18,7 +18,7 @@ public class ItemEventPublisher {
     public void publish(ItemCreatedEvent event) {
         var item = event.getItem();
         kafkaTemplate.send(ITEM_CREATED, item.getId(), event);
-        log.info("Sent event {} informing about creating item with id {} and name {}", event.getEventId(), item.getId(), item.getName());
+        log.info("Published ItemCreatedEvent {} for item id {} and name {}", event.getEventId(), item.getId(), item.getName());
     }
 
 }

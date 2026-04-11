@@ -23,6 +23,7 @@ TODO
 * [Architecture Overview](#architecture-overview)
 * [Apache Kafka as the Event Backbone](#apache-kafka-as-the-event-backbone)
 * [Technology Stack](#technology-stack)
+* [How It Works](#how-it-works)
 
 ## Motivation
 
@@ -128,6 +129,184 @@ Here is an overview of the technology stack:
 
 This stack was selected to support asynchronous communication, scalability, and resilience.
 It balances simplicity for local development with the robustness required for real-world event driven systems, providing a strong foundation for building reactive and extensible microservices.
+
+## How It Works
+
+This implementation follows Event-Driven Architecture (EDA) principles, allowing services to communicate asynchronously through Apache Kafka.
+The system is built around three main components: the Producer, Apache Kafka, and the Consumer, each with a clearly defined responsibility.
+Such a separation allows the application to scale independently, remain loosely coupled, and handle events reliably and efficiently.
+
+This template is designed to be easy to adapt.
+Rather than modeling a complex business domain, it provides a straightforward, flexible example that can be easily customized.
+For this reason, I chose a simple item-creation workflow that is easy to understand and clearly illustrates how event-driven communication works.
+The flow is presented below.
+
+### Producer
+
+Incoming requests are first handled by the controller, serving as the entry point for API calls.
+The `ItemCreateController` is a Spring-managed bean that listens for `HTTP POST` requests at the `/items` endpoint.
+Upon receiving a request, the controller delegates the creation logic to the `ItemService`, which manages the business behavior and publishes events to Kafka.
+By separating responsibilities in this way, the service focuses purely on domain logic, while the controller handles HTTP concerns.
+
+```java
+@RestController
+@RequestMapping("/items")
+@RequiredArgsConstructor
+public class ItemCreateController {
+
+    private final ItemService itemService;
+
+    @PostMapping
+    public ResponseEntity<ItemDTO> createItem(@Valid @RequestBody CreateItemDTO createItemDTO) {
+        var createdItem = itemService.createItem(createItemDTO.name());
+        return ResponseEntity.status(CREATED).body(ItemDTO.fromItem(createdItem));
+    }
+
+}
+```
+
+The `ItemService` creates a new `Item` domain object and generates an `ItemCreatedEvent`, representing a domain occurrence that other parts of the system can react to asynchronously.
+Event delivery is then delegated to the `ItemEventPublisher`, which handles sending the event to Kafka.
+
+```java
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ItemService {
+
+    private final ItemEventPublisher publisher;
+
+    public Item createItem(String name) {
+        var item = Item.create(name);
+        log.info("Created item with id {} and name {}", item.getId(), item.getName());
+
+        var event = ItemCreatedEvent.builder().eventId(randomUUID().toString()).item(item).build();
+        publisher.publish(event);
+
+        return item;
+    }
+
+}
+```
+
+By isolating publishing in a dedicated component, the service remains focused on business rules, while the publisher handles Kafka integration.
+This design allows new consumers to react to the same event without modifying the service, supporting a loosely coupled and scalable architecture.
+
+The `ItemEventPublisher` sends events to Kafka using a `KafkaTemplate`.
+It's worth noting that each event is keyed by the item's ID, which helps Kafka maintain ordering for messages related to the same item.
+
+```java
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class ItemEventPublisher {
+    
+    private final KafkaTemplate<String, ItemCreatedEvent> kafkaTemplate;
+    
+    public void publish(ItemCreatedEvent event) {
+        var item = event.getItem();
+        kafkaTemplate.send(ITEM_CREATED, item.getId(), event);
+        log.info("Published ItemCreatedEvent {} for item id {} and name {}", event.getEventId(), item.getId(), item.getName());
+    }
+
+}
+```
+
+Once published, the event becomes available in the Kafka topic for any subscribed consumers.
+This decoupling lets multiple consumers react independently to the same event, for example, updating a read model, sending notifications, or triggering other workflows.
+
+### Consumer
+
+The `ItemEventListener` subscribes to the `ITEM_CREATED` topic and triggers domain-specific processing whenever a new event arrives.
+It is a Spring-managed bean that listens to Kafka events using the `@KafkaListener` annotation.
+The listener is assigned a consumer group ID, which allows multiple instances of the `ItemEventListener` to run in parallel while making sure each event is processed by only one instance in the group.
+
+```java
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class ItemEventListener {
+
+    private final ItemCreatedEventHandler handler;
+
+    @KafkaListener(topics = ITEM_CREATED, groupId = "template-consumer")
+    public void onItemCreated(ItemCreatedEvent event) {
+        log.info("Received event {}", event.getEventId());
+        handler.handle(event);
+    }
+
+}
+```
+
+When an event is received, the listener delegates processing to the `ItemCreatedEventHandler`, which executes the actual business logic associated with the event.
+In this case, it adds the item to the `ItemStore`. This separation ensures that event reception and domain logic are decoupled, making the system easier to maintain and extend.
+
+```java
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ItemCreatedEventHandler {
+
+    private final ItemStore itemStore;
+
+    public void handle(ItemCreatedEvent event) {
+        var item = event.getItem();
+        itemStore.add(item);
+        log.info("Item added to item store: id={}, name={}", item.getId(), item.getName());
+    }
+
+}
+```
+
+As a result, responsibilities are clearly divided:
+* The listener handles receiving events from Kafka.
+* The handler contains the domain logic for processing events.
+* The store manages data storage independently of event processing.
+
+This design supports asynchronous, scalable, and loosely coupled workflows.
+New handlers can be added for the same event without changing existing producers or consumers.
+
+In addition to creating items, the system also provides a way to read all stored items.
+This is handled by the `ItemReadController`, which exposes an endpoint for retrieving the current state of the item store.
+
+```java
+@RestController
+@RequestMapping("/items")
+@RequiredArgsConstructor
+public class ItemReadController {
+
+    private final ItemStore itemStore;
+
+    @GetMapping
+    public ResponseEntity<List<ItemDTO>> getItems() {
+        return ResponseEntity.ok(itemStore.getAll().stream().map(ItemDTO::fromItem).toList());
+    }
+
+}
+```
+
+Event-driven systems often follow a common pattern: item creation and event publication are decoupled from read operations.  
+Consumers update a local store asynchronously, which can then be queried efficiently.  
+By separating write and read responsibilities, the system stays scalable, responsive, and consistent.
+
+### End-to-End Flow
+
+Creating an item:
+1. Client sends `HTTP POST` to Producer
+2. Producer starts processing the request, as it is received by the Controller
+3. Controller delegates creation to the Service
+4. Service creates the Item and publishes an event
+5. Event is sent to the Kafka topic
+6. Consumer starts processing the event, as it is received by the Listener
+7. Listener passes the event to the Handler
+8. Handler processes the event and updates the Store
+
+Reading data:
+1. Client sends `HTTP GET` to Consumer
+2. Consumer starts processing the request, as it is received by the Controller
+3. Controller reads data from the Store, which is updated as events are received and processed, then returns it in the response
+
+This flow demonstrates how an Event-Driven Architecture works in practice with Spring Boot and Kafka, supporting asynchronous communication, loose coupling, and a clear separation of responsibilities.
 
 ## Disclaimer
 
