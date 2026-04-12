@@ -25,6 +25,7 @@ TODO
 * [Technology Stack](#technology-stack)
 * [How It Works](#how-it-works)
 * [Build and Deployment](#build-and-deployment)
+* [Events, Topics, and Endpoints](#events-topics-and-endpoints)
 
 ## Motivation
 
@@ -426,6 +427,74 @@ Running these commands first builds the applications using Apache Maven and then
 
 With these build and deployment options, you can easily build, test, and run the application locally or in Docker containers.
 The setup is flexible and can be adapted as your project grows or requirements change.
+
+## Events, Topics, and Endpoints
+
+Events, topics, and endpoints are intentionally kept simple, as this project is designed to serve as a template.
+For this reason, I chose a straightforward item-creation workflow that is easy to understand and clearly illustrates event-driven communication in practice.
+Consequently, these elements provide a clear and accessible way to see how the system works.
+
+An event represents an occurrence in the system, a meaningful action that has taken place, giving other components the opportunity to react to it asynchronously.
+In this template, the event is `ItemCreatedEvent`:
+
+```java
+@Data
+@Builder
+@Jacksonized
+public class ItemCreatedEvent {
+
+    private final String eventId;
+
+    private final Item item;
+
+}
+```
+
+This event is created whenever a new item is added. The Producer exposes the following endpoint to create items:
+```console
+http://localhost:8080/items
+```
+
+You can create an item by sending a simple `POST` request, for example:
+```shell
+curl -i -X POST http://localhost:8080/items   -H "Content-Type: application/json"   -d '{"name":"Item A"}'
+```
+
+The Consumer reacts to the `ItemCreatedEvent` and stores items in memory.
+It also provides an endpoint to view the stored items:
+```console
+http://localhost:8081/items
+```
+
+By sending a `GET` request to this endpoint or simply opening the URL in a browser, you can see the created items, for example:
+```json
+[
+  {
+    "id": "bc0ac641-b5f0-4e99-b067-926cead738f9",
+    "name": "Item A"
+  }
+]
+```
+
+Events are sent to topics. In this example, `ItemCreatedEvent`s are sent to the `item-created` topic.
+
+If you are running Kafka in Docker, as described in the [Build and Deployment](#build-and-deployment) section, you can list all topics using the following command:
+```shell
+docker exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+```
+
+You can also check the events that have been sent to a topic like this:
+```shell
+docker exec kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic item-created --from-beginning
+```
+
+You should see logs similar to the following, which are continuously updated as new events are received:
+```console
+{"eventId":"65c9e8c4-b373-4f5a-9af3-bb13d2623fd4","item":{"id":"bc0ac641-b5f0-4e99-b067-926cead738f9","name":"Item A"}}
+```
+
+There are also `/actuator` endpoints that can be useful for monitoring.
+These are described in the next section: [Production-Ready Features](#production-ready-features).
 
 ## Disclaimer
 
