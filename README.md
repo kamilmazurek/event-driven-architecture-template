@@ -26,6 +26,7 @@ TODO
 * [How It Works](#how-it-works)
 * [Build and Deployment](#build-and-deployment)
 * [Events, Topics, and Endpoints](#events-topics-and-endpoints)
+* [Production-Ready Features](#production-ready-features)
 
 ## Motivation
 
@@ -43,7 +44,7 @@ EDA is particularly well-suited for distributed microservices, where responsiven
 In this implementation, the architecture is centered around Kafka as the communication backbone.
 The image below illustrates the concept used in this project:
 
-### TODO: add image
+**TODO: add image**
 
 The main parts of this template include:
 * **Producer**
@@ -495,6 +496,89 @@ You should see logs similar to the following, which are continuously updated as 
 
 There are also `/actuator` endpoints that can be useful for monitoring.
 These are described in the next section: [Production-Ready Features](#production-ready-features).
+
+## Production-Ready Features
+
+The template includes a basic setup for Spring Boot Actuator, a library that adds ready-to-use production features to Spring Boot applications.
+It offers monitoring and health checks that can be customized through configuration.
+These features make it easy to track the status of the Producer, Consumer, and Kafka connections.
+
+Two key Actuator endpoints are configured in this template:
+* `/actuator`, which lists all exposed actuator endpoints:
+  *  `http://localhost:8080/actuator` for Producer
+  *  `http://localhost:8081/actuator` for Consumer
+* `/actuator/health`, which shows the current health status of the application:
+  * `http://localhost:8080/actuator/health` for Producer
+  * `http://localhost:8081/actuator/health` for Consumer
+
+The list of available Actuator endpoints is accessible at the `/actuator` endpoint.
+It can be customized by modifying the `management.endpoints.web.exposure.include` property in `application.yaml`.
+For example, to enable the beans endpoint, add it to the `management.endpoints.web.exposure.include` list:
+```yaml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, beans
+```
+
+It is also possible to expose metrics:
+```yaml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, beans, metrics
+```
+
+The `/actuator/metrics` endpoint provides a list of available metrics.
+For example, the Producer `spring.kafka.template` metric can be accessed at the following endpoint, provided it has been enabled as described above:
+```console
+http://localhost:8080/actuator/metrics/spring.kafka.template
+```
+
+The health status of the application can be checked by sending a request to the `/actuator/health` endpoint.
+The response will show the current state of the application, for example:
+```console
+http://localhost:8080/actuator/health
+```
+```json
+{
+  "status": "UP"
+}
+```
+
+To protect sensitive details, the application provides only basic health status by default.
+If more detailed information is needed, such as disk space usage, it can be enabled by updating the `application.yaml` file as follows:
+```yaml
+management:
+  endpoint:
+    health:
+      show-details: "always"
+```
+
+After making this change, the `/actuator/health` endpoint provides more detailed information.
+It also enables additional endpoints, such as `/actuator/health/kafka`, which show the status of Kafka, e.g.:
+```console
+http://localhost:8080/actuator/health/kafka
+```
+```json
+{
+  "status": "UP",
+  "details": {
+    "clusterId": "5L6g3nShT-eMCtK--X86sw"
+  }
+}
+```
+
+Additional details are available in the Spring Boot Actuator documentation: [https://docs.spring.io/spring-boot/reference/actuator/endpoints.html](https://docs.spring.io/spring-boot/reference/actuator/endpoints.html).
+
+These features make it easier to monitor and manage the application, giving you clear insights into its health and performance across all layers.
+Proper use of Actuator endpoints can help keep the application reliable and make troubleshooting simpler in both development and production.
+
+**Important:** In production environments, actuator endpoints should be secured to prevent unauthorized access.
+It is recommended to restrict access using authentication and authorization mechanisms.
+Be cautious when enabling detailed health information or sensitive endpoints.
 
 ## Disclaimer
 
