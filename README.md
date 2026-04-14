@@ -359,6 +359,13 @@ These commands will:
 * build Docker images for the Producer and Consumer
 * start Kafka and both services
 
+Rebuilds and deployments may accumulate unused Docker images and volumes, consuming additional disk space over time.
+It is possible to clean up previous images and volumes while rebuilding the application:
+```shell
+mvnw clean package
+docker compose down --rmi local --volumes && docker compose up --build
+```
+
 By default, the Producer runs on port 8080, and the Consumer runs on port 8081.
 
 You can quickly verify that it works. Start by sending a simple `POST` request to the Producer, for example:
