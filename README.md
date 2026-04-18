@@ -27,6 +27,7 @@ TODO
 * [Build and Deployment](#build-and-deployment)
 * [Events, Topics, and Endpoints](#events-topics-and-endpoints)
 * [Production-Ready Features](#production-ready-features)
+* [Tests](#tests)
 
 ## Motivation
 
@@ -586,6 +587,53 @@ Proper use of Actuator endpoints can help keep the application reliable and make
 **Important:** In production environments, actuator endpoints should be secured to prevent unauthorized access.
 It is recommended to restrict access using authentication and authorization mechanisms.
 Be cautious when enabling detailed health information or sensitive endpoints.
+
+## Tests
+
+The project is covered by both unit and integration tests, with the Maven Surefire Plugin and Maven Failsafe Plugin preconfigured to execute them.
+
+Tests are written using JUnit, Mockito, and REST Assured, covering the API layer, business logic, and communication with Apache Kafka.
+
+There are two types of tests implemented in this template:
+* Unit tests (`*Test.java`) are executed by Surefire and focus on individual components such as services, handlers, and listeners.
+* Integration tests (`*IntegrationTest.java`) are executed by Failsafe and verify how application components work together.
+
+Integration tests use an Apache Kafka instance running in Docker via Testcontainers. Therefore, Docker is required to run these tests.
+
+Both types of tests can be run using:
+```shell
+mvnw clean verify
+```
+
+Unit tests are executed by the Maven Surefire Plugin, e.g., by running:
+```shell
+mvnw clean test
+```
+
+Integration tests are executed by the Maven Failsafe Plugin, e.g., by running:
+```shell
+mvnw clean integration-test
+```
+Please note that this also runs unit tests.
+
+Both types of tests are also executed as part of a standard build:
+```shell
+mvnw clean install
+```
+
+Additionally, the project comes with Allure Report configured, which generates test reports accessible in a browser.
+To generate and view the reports, the following commands can be used:
+```shell
+mvnw clean verify
+mvnw allure:serve
+```
+
+The test report is then opened in the browser. An excerpt from the report is shown below:
+
+**TODO: add image**
+
+These tests include unit tests, which focus on domain logic and individual components, and integration tests, which verify that both the producer and the consumer interact correctly with external systems.
+This approach works well with the decoupled, message-driven design of Event-Driven Architecture.
 
 ## Disclaimer
 
