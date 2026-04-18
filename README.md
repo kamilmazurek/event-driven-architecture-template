@@ -29,6 +29,8 @@ TODO
 * [Production-Ready Features](#production-ready-features)
 * [Tests](#tests)
 * [Additional Resources](#additional-resources)
+* [Author](#author)
+* [Disclaimer](#disclaimer)
 
 ## Motivation
 
@@ -642,6 +644,17 @@ This approach works well with the decoupled, message-driven design of Event-Driv
 * [EWhat do you mean by “Event-Driven”, Martin Fowler](https://martinfowler.com/articles/201701-event-driven.html)
 * [Event-driven architecture, Wikipedia](https://en.wikipedia.org/wiki/Event-driven_architecture)
 * [Pattern: Event-driven architecture, microservices.io](https://microservices.io/patterns/data/event-driven-architecture.html)
+
+## Author
+
+This project was created by [Kamil Mazurek](https://kamilmazurek.pl), a Software Engineer based in Warsaw, Poland.
+You can also find me on my [LinkedIn profile](https://www.linkedin.com/in/kamil-mazurek).
+
+More of my repositories can also be found on my GitHub and GitLab profiles:
+- [Kamil Mazurek on GitHub](https://github.com/kamilmazurek)
+- [Kamil Mazurek on GitLab](https://gitlab.com/kamilmazurek)
+
+Thanks for visiting 🙂
 
 ## Disclaimer
 
