@@ -28,6 +28,7 @@ TODO
 * [Events, Topics, and Endpoints](#events-topics-and-endpoints)
 * [Production-Ready Features](#production-ready-features)
 * [Tests](#tests)
+* [Additional Resources](#additional-resources)
 
 ## Motivation
 
@@ -634,6 +635,13 @@ The test report is then opened in the browser. An excerpt from the report is sho
 
 These tests include unit tests, which focus on domain logic and individual components, and integration tests, which verify that both the producer and the consumer interact correctly with external systems.
 This approach works well with the decoupled, message-driven design of Event-Driven Architecture.
+
+## Additional Resources
+
+* [Event-Driven Architecture Template with Java and Spring Boot](https://kamilmazurek.pl/event-driven-architecture-template)
+* [EWhat do you mean by “Event-Driven”, Martin Fowler](https://martinfowler.com/articles/201701-event-driven.html)
+* [Event-driven architecture, Wikipedia](https://en.wikipedia.org/wiki/Event-driven_architecture)
+* [Pattern: Event-driven architecture, microservices.io](https://microservices.io/patterns/data/event-driven-architecture.html)
 
 ## Disclaimer
 
