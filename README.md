@@ -1,4 +1,4 @@
-# Event-Driven Architecture Template with Java, Kafka, and Spring Boot
+# Event-Driven Architecture Template
 
 This repository contains the implementation of a Java-based microservice template that follows the principles of Event-Driven Architecture (EDA).
 Built with Spring Boot and powered by Apache Kafka, the template provides a clean foundation for building scalable and resilient distributed applications, which communicate through events rather than direct service-to-service calls.
@@ -16,7 +16,39 @@ The goal is to keep the template practical, clean, and easy to adapt, providing 
 
 ## Quickstart
 
-TODO
+Following steps provide a quick way to get started with the Event-Driven Architecture Template:
+1. Ensure a JDK is available to build and run the code. Temurin, based on OpenJDK and available from [adoptium.net](https://adoptium.net/), can be used for this purpose.
+2. The project uses Docker to run Kafka. It is possible to run the template without it, but using Docker is recommended to get started quickly. The following steps assume Docker is installed, so please make sure you have it before proceeding.
+3. Download the source code either by cloning the repository with Git or by downloading the ZIP file. If you downloaded the ZIP, extract it. Then navigate to the project folder.
+4. Build the application and start it using Docker Compose:
+    ```shell
+    mvnw clean package
+    docker compose up --build
+    ```
+    Rebuilds and deployments may accumulate unused Docker images and volumes, consuming additional disk space over time.
+    It is possible to clean up previous images and volumes when rebuilding the application:
+    ```shell
+    mvnw clean package
+    docker compose down --rmi local --volumes && docker compose up --build
+    ```   
+5. Verify that the application is running by sending a POST request to the Producer service:
+    ```shell
+    curl -i -X POST http://localhost:8080/items -H "Content-Type: application/json" -d '{"name":"Item A"}'
+    ```
+6. Check the Consumer by opening:
+    ```console
+    http://localhost:8081/items
+    ```
+   The response should contain an item like:
+    ```json
+    [
+      {
+        "id": "bc0ac641-b5f0-4e99-b067-926cead738f9",
+        "name": "Item A"
+      }
+    ]
+    ```
+7. Customize the source code as needed, rebuild the project, and run the application 🚀.
 
 ## Table of Contents
 * [Motivation](#motivation)
@@ -61,8 +93,10 @@ The main parts of this template include:
     * Defines the event payloads and domain objects shared between producer and consumer.
     * Ensures consistent data structure and serialization across services.
 * **Broker (Apache Kafka)**
-    * Serves as the messaging backbone, storing and delivering events to subscribed consumers.
-    * Supports decoupled communication, event replay, and scalability for producers and consumers.
+    * Serves as the messaging backbone and distributed event log, storing events as an ordered sequence.
+    * Provides partitioned storage with configurable durability (e.g., replication, acknowledgments).
+    * Enables event replay, retention policies, and scalable consumption by multiple consumers.
+    * Supports decoupled communication between producers and consumers.
 * **Supporting Components**
     * Spring Boot Actuator for health checks.
 
@@ -364,7 +398,7 @@ These commands will:
 * start Kafka and both services
 
 Rebuilds and deployments may accumulate unused Docker images and volumes, consuming additional disk space over time.
-It is possible to clean up previous images and volumes while rebuilding the application:
+It is possible to clean up previous images and volumes when rebuilding the application:
 ```shell
 mvnw clean package
 docker compose down --rmi local --volumes && docker compose up --build
