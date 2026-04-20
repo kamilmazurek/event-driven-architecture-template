@@ -54,6 +54,7 @@ Following steps provide a quick way to get started with the Event-Driven Archite
 * [Motivation](#motivation)
 * [Architecture Overview](#architecture-overview)
 * [Apache Kafka as the Event Backbone](#apache-kafka-as-the-event-backbone)
+* [When to Use Event-Driven Architecture](#when-to-use-event-driven-architecture) 
 * [Technology Stack](#technology-stack)
 * [How It Works](#how-it-works)
 * [Build and Deployment](#build-and-deployment)
@@ -135,6 +136,26 @@ These capabilities make Kafka particularly well suited for event-driven architec
 * **Event replay** - consumers can reprocess events by resetting offsets
 
 With these features, Kafka can be used not only as a broker, but also as an event backbone for microservice ecosystems.
+
+## When to Use Event-Driven Architecture
+
+Event-Driven Architecture, also known as EDA, organizes a system around the production, detection, and reaction to events.
+Instead of tightly coupling components through direct calls, different parts of the system communicate by emitting and consuming events.
+This approach promotes loose coupling, scalability, and responsiveness, making it easier to evolve and extend your application over time.
+
+This architecture is particularly effective for systems that must handle asynchronous workflows or high volumes of distributed interactions.
+It works well in environments where multiple services or modules need to react to changes independently, such as processing orders, updating analytics, sending notifications, or integrating with external systems.
+It may also be a strong fit for systems that require high scalability and resilience.
+Additionally, by decoupling producers from consumers, teams can develop, deploy, and scale components independently, which improves flexibility and supports continuous delivery.
+
+However, an Event-Driven Architecture introduces additional complexity.
+Managing event consistency, tracing flows across services, handling failures, and ensuring reliable delivery requires careful design and tooling.
+For smaller applications, systems with simple request–response flows, or projects with tight deadlines, this added complexity may outweigh the benefits.
+In such cases, a [Hexagonal Architecture](https://kamilmazurek.pl/hexagonal-architecture-template) can provide a more straightforward and maintainable approach,
+while a [Layered Architecture](https://kamilmazurek.pl/layered-architecture-template) may be suitable if an even simpler structure is desired.
+
+Ultimately, choose Event-Driven Architecture when your system must be highly scalable, reactive, and loosely coupled.
+When implemented thoughtfully, it enables resilient, extensible systems that can evolve naturally as new consumers, integrations, and business capabilities emerge.
 
 ## Technology Stack
 
