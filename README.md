@@ -161,7 +161,7 @@ Here is an overview of the technology stack:
   - **JUnit**: Framework for writing unit tests in Java.
   - **REST Assured**: Library for testing REST endpoints.
   - **Mockito**: Mocking framework for isolating components during unit tests.
-  - **Testcontainers**: Provides lightweight, disposable Kafka instance for integration testing.
+  - **Testcontainers**: Runs real infrastructure dependencies (e.g. Apache Kafka) in Docker containers for reliable integration testing.
   - **Allure Report**: Generates detailed and readable test reports.
 
 - **Build & Deployment**
@@ -461,15 +461,59 @@ java -jar producer/target/producer-1.0.0-SNAPSHOT.jar
 java -jar consumer/target/consumer-1.0.0-SNAPSHOT.jar
 ```
 
-### Building Docker Images Manually
+### Building and Running Docker Images Manually
 
-If you want to build the Docker images without using Docker Compose, you can do it like this:
+If you prefer not to use Docker Compose, you can build and run each service step by step.
+
+First, package the applications and build the Docker images:
 ```shell
 mvnw clean package
-docker build -t template/event-driven-template-producer -f producer/Dockerfile ./producer
-docker build -t template/event-driven-template-consumer -f consumer/Dockerfile ./consumer
+docker build -t template/event-driven-architecture-template-producer -f producer/Dockerfile ./producer
+docker build -t template/event-driven-architecture-template-consumer -f consumer/Dockerfile ./consumer
 ```
-Running these commands first builds the applications using Apache Maven and then produces Docker images for the Producer and Consumer.
+This compiles the applications using Maven and creates Docker images for both the Producer and Consumer services.
+
+To allow the containers to communicate with each other, create a dedicated Docker network:
+```shell
+docker network create event-driven-architecture-template-network
+```
+
+Run the Kafka broker container:
+```shell
+docker run --name kafka \
+  --network event-driven-architecture-template-network \
+  -p 9092:9092 \
+  -e KAFKA_NODE_ID=1 \
+  -e KAFKA_PROCESS_ROLES=broker,controller \
+  -e KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka:9093 \
+  -e KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT \
+  -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093 \
+  -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092 \
+  -e KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER \
+  -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
+  -e KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1 \
+  apache/kafka:3.9.1
+```
+
+Start the Producer:
+```shell
+docker run --name event-driven-architecture-template-producer \
+  --network event-driven-architecture-template-network \
+  -p 8080:8080 \
+  -e SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092 \
+  template/event-driven-architecture-template-producer
+```
+
+Start the Consumer:
+```shell
+docker run --name event-driven-architecture-template-consumer \
+  --network event-driven-architecture-template-network \
+  -p 8081:8081 \
+  -e SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092 \
+  template/event-driven-architecture-template-consumer
+```
+
+---
 
 With these build and deployment options, you can easily build, test, and run the application locally or in Docker containers.
 The setup is flexible and can be adapted as your project grows or requirements change.
