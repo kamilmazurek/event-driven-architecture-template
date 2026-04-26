@@ -22,7 +22,7 @@ services:
     build:
       context: ./producer
       dockerfile: Dockerfile
-    image: template/event-driven-template-producer
+    image: template/event-driven-architecture-template-producer
     depends_on:
       - kafka
     ports:
@@ -35,7 +35,7 @@ services:
     build:
       context: ./consumer
       dockerfile: Dockerfile
-    image: template/event-driven-template-consumer
+    image: template/event-driven-architecture-template-consumer
     depends_on:
       - kafka
     ports:
