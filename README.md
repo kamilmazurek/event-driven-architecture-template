@@ -1,3 +1,6 @@
+> This documentation is also available in an enhanced form at
+> [Event-Driven Architecture Template](https://kamilmazurek.pl/event-driven-architecture-template) page.
+
 # Event-Driven Architecture Template
 
 This repository contains the implementation of a Java-based microservice template that follows the principles of Event-Driven Architecture (EDA).
@@ -195,7 +198,7 @@ It balances simplicity for local development with the robustness required for re
 ## How It Works
 
 This implementation follows Event-Driven Architecture (EDA) principles, allowing services to communicate asynchronously through Apache Kafka.
-It uses the Spring Framework, where components are managed as [Spring Beans](https://kamilmazurek.pl/spring-beans-explained), enabling clean dependency management and loose coupling.
+It uses the Spring Framework, where components are managed as [Spring Beans](https://kamilmazurek.pl/spring-beans-explained), supporting clean dependency management and loose coupling.
 
 The system is built around three main components: the Producer, Apache Kafka, and the Consumer, each with a clearly defined responsibility.
 Such a separation allows the application to scale independently, remain loosely coupled, and handle events reliably and efficiently.
