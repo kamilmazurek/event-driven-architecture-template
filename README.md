@@ -195,6 +195,8 @@ It balances simplicity for local development with the robustness required for re
 ## How It Works
 
 This implementation follows Event-Driven Architecture (EDA) principles, allowing services to communicate asynchronously through Apache Kafka.
+It uses the Spring Framework, where components are managed as [Spring Beans](https://kamilmazurek.pl/spring-beans-explained), enabling clean dependency management and loose coupling.
+
 The system is built around three main components: the Producer, Apache Kafka, and the Consumer, each with a clearly defined responsibility.
 Such a separation allows the application to scale independently, remain loosely coupled, and handle events reliably and efficiently.
 
