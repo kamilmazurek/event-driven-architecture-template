@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+DIR="$(cd "$(dirname "$0")" && pwd)"
+"$DIR/../mvnw" -f "$DIR/pom.xml" "$@"
