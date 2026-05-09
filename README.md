@@ -748,6 +748,7 @@ This approach works well with the decoupled, message-driven design of Event-Driv
 * [EWhat do you mean by “Event-Driven”, Martin Fowler](https://martinfowler.com/articles/201701-event-driven.html)
 * [Event-driven architecture, Wikipedia](https://en.wikipedia.org/wiki/Event-driven_architecture)
 * [Pattern: Event-driven architecture, microservices.io](https://microservices.io/patterns/data/event-driven-architecture.html)
+* [Event-Driven Architecture Template on LibHunt](https://www.libhunt.com/r/event-driven-architecture-template)
 
 ## Author
 
