@@ -29,7 +29,7 @@ Following steps provide a quick way to get started with the Event-Driven Archite
     docker compose up --build
     ```
     Rebuilds and deployments may accumulate unused Docker images and volumes, consuming additional disk space over time.
-    It is possible to clean up previous images and volumes when rebuilding the application:
+    Therefore, for subsequent rebuilds, you may want to redeploy the application with cleanup of Compose-managed resources:    
     ```shell
     mvnw clean package
     docker compose down --rmi local --volumes && docker compose up --build
@@ -424,7 +424,7 @@ These commands will:
 * start Kafka and both services
 
 Rebuilds and deployments may accumulate unused Docker images and volumes, consuming additional disk space over time.
-It is possible to clean up previous images and volumes when rebuilding the application:
+Therefore, for subsequent rebuilds, you may want to redeploy the application with cleanup of Compose-managed resources:
 ```shell
 mvnw clean package
 docker compose down --rmi local --volumes && docker compose up --build
