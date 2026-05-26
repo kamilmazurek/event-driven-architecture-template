@@ -84,7 +84,7 @@ EDA is particularly well-suited for distributed microservices, where responsiven
 In this implementation, the architecture is centered around Kafka as the communication backbone.
 The image below illustrates the concept used in this project:
 
-**TODO: add image**
+![Concept diagram](readme-images/event-driven-architecture-template-concept-diagram.png)
 
 The main parts of this template include:
 * **Producer**
@@ -737,7 +737,7 @@ mvnw allure:serve
 
 The test report is then opened in the browser. An excerpt from the report is shown below:
 
-**TODO: add image**
+![Allure Report](readme-images/sample-allure-report.png)
 
 These tests include unit tests, which focus on domain logic and individual components, and integration tests, which verify that both the producer and the consumer interact correctly with external systems.
 This approach works well with the decoupled, message-driven design of Event-Driven Architecture.
