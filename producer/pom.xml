@@ -51,7 +51,7 @@
         <!-- Allure Report -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
+            <artifactId>allure-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
