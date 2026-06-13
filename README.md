@@ -54,7 +54,7 @@ Following steps provide a quick way to get started with the Event-Driven Archite
 7. Customize the source code as needed, rebuild the project, and run the application 🚀.
 
 ## Table of Contents
-* [Motivation](#motivation)
+* [Why this template?](#why-this-template)
 * [Architecture Overview](#architecture-overview)
 * [Apache Kafka as the Event Backbone](#apache-kafka-as-the-event-backbone)
 * [When to Use Event-Driven Architecture](#when-to-use-event-driven-architecture) 
@@ -68,12 +68,23 @@ Following steps provide a quick way to get started with the Event-Driven Archite
 * [Author](#author)
 * [Disclaimer](#disclaimer)
 
-## Motivation
+## Why this template?
 
-Starting new event-driven microservices often involves repetitive setup.
-I wanted the ability to start quickly and considered creating a Maven Archetype to automate this, but it felt too costly compared to the benefits.
-I also tried AI/LLM-based solutions for generating project scaffolding, but they lacked determinism and sometimes produced unreliable results.
-Instead, to reduce the overhead of repeatedly creating project skeletons, I decided to create this template.
+My main motivation for creating this project was to have a reusable implementation of microservices based on Event-Driven Architecture.
+Starting a new project often involves repeatedly setting up the same project structure, configuration, messaging infrastructure, and tooling.
+This template reduces that overhead by providing a solid foundation for building event-driven services.
+
+To accelerate development while maintaining quality standards, the template is configured with:
+
+* **Spring Boot 3**
+* **Docker support**
+* **Kafka support**
+* **Integration tests**
+* **Unit tests**
+* **Allure reports**
+* **Actuator endpoints**
+
+It reduces repetitive setup by providing a ready-to-use project structure, allowing developers to focus on business requirements.
 
 ## Architecture Overview
 
