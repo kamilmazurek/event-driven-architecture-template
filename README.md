@@ -159,6 +159,7 @@ This approach promotes loose coupling, scalability, and responsiveness, making i
 
 This architecture is particularly effective for systems that must handle asynchronous workflows or high volumes of distributed interactions.
 It works well in environments where multiple services or modules need to react to changes independently, such as processing orders, updating analytics, sending notifications, or integrating with external systems.
+For example, an [ETL Architecture pipeline](https://kamilmazurek.pl/etl-template-with-flink) can transform raw data into meaningful domain events to continuously feed an event-driven ecosystem.
 It may also be a strong fit for systems that require high scalability and resilience.
 Additionally, by decoupling producers from consumers, teams can develop, deploy, and scale components independently, which improves flexibility and supports continuous delivery.
 
