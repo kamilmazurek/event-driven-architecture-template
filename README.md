@@ -28,11 +28,10 @@ Following steps provide a quick way to get started with the Event-Driven Archite
     mvnw clean package
     docker compose up --build
     ```
-    Rebuilds and deployments may accumulate unused Docker images and volumes, consuming additional disk space over time.
-    Therefore, for subsequent rebuilds, you may want to redeploy the application with cleanup of Compose-managed resources:    
+    Rebuilds and deployments may accumulate unused data, consuming additional disk space over time.
+    Therefore, you may want to clean up Compose-managed resources and delete data volumes:    
     ```shell
-    mvnw clean package
-    docker compose down --rmi local --volumes && docker compose up --build
+    docker compose down -v
     ```   
 5. Verify that the application is running by sending a POST request to the Producer service:
     ```shell
@@ -435,11 +434,10 @@ These commands will:
 * build Docker images for the Producer and Consumer
 * start Kafka and both services
 
-Rebuilds and deployments may accumulate unused Docker images and volumes, consuming additional disk space over time.
-Therefore, for subsequent rebuilds, you may want to redeploy the application with cleanup of Compose-managed resources:
+Rebuilds and deployments may accumulate unused data, consuming additional disk space over time.
+Therefore, you may want to clean up Compose-managed resources and delete data volumes:
 ```shell
-mvnw clean package
-docker compose down --rmi local --volumes && docker compose up --build
+docker compose down -v
 ```
 
 By default, the Producer runs on port 8080, and the Consumer runs on port 8081.
