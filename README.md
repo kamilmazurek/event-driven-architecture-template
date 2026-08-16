@@ -3,6 +3,8 @@
 
 # Event-Driven Architecture Template
 
+[![Build](https://github.com/kamilmazurek/event-driven-architecture-template/actions/workflows/build.yml/badge.svg)](https://github.com/kamilmazurek/event-driven-architecture-template/actions/workflows/build.yml)
+
 This repository contains the implementation of a Java-based microservice template that follows the principles of Event-Driven Architecture (EDA).
 Built with Spring Boot and powered by Apache Kafka, the template provides a clean foundation for building scalable and resilient distributed applications, which communicate through events rather than direct service-to-service calls.
 With a modular structure and clear separation between domain logic, messaging infrastructure, and configuration, it serves as a reusable starting point for modern microservice ecosystems.
