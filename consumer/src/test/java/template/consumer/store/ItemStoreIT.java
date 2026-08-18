@@ -2,7 +2,7 @@ package template.consumer.store;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import template.consumer.AbstractConsumerIntegrationTest;
+import template.consumer.AbstractConsumerIT;
 import template.consumer.handler.ItemCreatedEventHandler;
 import template.commons.model.domain.Item;
 import template.commons.model.event.ItemCreatedEvent;
@@ -10,7 +10,7 @@ import template.commons.model.event.ItemCreatedEvent;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ItemStoreIntegrationTest extends AbstractConsumerIntegrationTest {
+public class ItemStoreIT extends AbstractConsumerIT {
 
     @Autowired
     private ItemCreatedEventHandler handler;

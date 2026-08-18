@@ -2,7 +2,7 @@ package template.consumer.controller;
 
 
 import org.junit.jupiter.api.Test;
-import template.consumer.AbstractConsumerIntegrationTest;
+import template.consumer.AbstractConsumerIT;
 import template.commons.model.domain.Item;
 import template.commons.model.dto.ItemDTO;
 
@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ItemReadControllerIntegrationTest extends AbstractConsumerIntegrationTest {
+public class ItemReadControllerIT extends AbstractConsumerIT {
 
     @Test
     void shouldReturnItemsFromStore() {
