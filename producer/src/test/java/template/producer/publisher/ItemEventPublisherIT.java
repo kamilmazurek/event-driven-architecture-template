@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import template.commons.model.domain.Item;
 import template.commons.model.event.ItemCreatedEvent;
-import template.producer.AbstractProducerIntegrationTest;
+import template.producer.AbstractProducerIT;
 
 import java.time.Duration;
 
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.getSingleRecord;
 import static template.commons.model.topic.Topics.ITEM_CREATED;
 
-public class ItemEventPublisherIntegrationTest extends AbstractProducerIntegrationTest {
+public class ItemEventPublisherIT extends AbstractProducerIT {
 
     @Autowired
     private ItemEventPublisher publisher;

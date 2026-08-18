@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.kafka.core.KafkaTemplate;
-import template.consumer.AbstractConsumerIntegrationTest;
+import template.consumer.AbstractConsumerIT;
 import template.commons.model.domain.Item;
 import template.commons.model.event.ItemCreatedEvent;
 
@@ -18,7 +18,7 @@ import static org.awaitility.Awaitility.await;
 import static template.commons.model.topic.Topics.ITEM_CREATED;
 
 @ExtendWith(OutputCaptureExtension.class)
-public class ItemEventListenerIntegrationTest extends AbstractConsumerIntegrationTest {
+public class ItemEventListenerIT extends AbstractConsumerIT {
 
     @Autowired
     private KafkaTemplate<String, ItemCreatedEvent> kafkaTemplate;

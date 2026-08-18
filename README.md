@@ -715,7 +715,7 @@ Tests are written using JUnit, Mockito, and REST Assured, covering the API layer
 
 There are two types of tests implemented in this template:
 * Unit tests (`*Test.java`) are executed by Surefire and focus on individual components such as services, handlers, and listeners.
-* Integration tests (`*IntegrationTest.java`) are executed by Failsafe and verify how application components work together.
+* Integration tests (`*IT.java`) are executed by Failsafe and verify how application components work together.
 
 Integration tests use an Apache Kafka instance running in Docker via Testcontainers. Therefore, Docker is required to run these tests.
 
@@ -751,8 +751,21 @@ The test report is then opened in the browser. An excerpt from the report is sho
 
 ![Allure Report](readme-images/sample-allure-report.png)
 
-These tests include unit tests, which focus on domain logic and individual components, and integration tests, which verify that both the producer and the consumer interact correctly with external systems.
-This approach works well with the decoupled, message-driven design of Event-Driven Architecture.
+Furthermore, the JaCoCo Maven Plugin is included to evaluate test coverage. It combines results from both unit and integration tests into one report.
+
+This report is built automatically when executing the `verify` phase. You can trigger this process with:
+```console
+mvnw clean verify
+```
+
+Once the build completes successfully, the full coverage details can be viewed by opening this file in your web browser:
+```
+target/site/jacoco/index.html
+```
+This provides a convenient way to ensure that the core logic of your application is adequately covered.
+
+Overall, the test suite combines unit tests, which focus on domain logic and individual components, with integration tests, which verify that the producer and consumer interact correctly with external systems.
+Such an approach works well with the decoupled, message-driven design of Event-Driven Architecture.
 
 ## Additional Resources
 

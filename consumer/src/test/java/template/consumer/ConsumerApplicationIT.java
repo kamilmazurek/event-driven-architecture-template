@@ -2,7 +2,7 @@ package template.consumer;
 
 import org.junit.jupiter.api.Test;
 
-class ConsumerApplicationIntegrationTest extends AbstractConsumerIntegrationTest {
+class ConsumerApplicationIT extends AbstractConsumerIT {
 
     @Test
     void shouldStartContext() {

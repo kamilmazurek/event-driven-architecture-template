@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.containsString;
 
-public abstract class AbstractActuatorIntegrationTest extends AbstractIntegrationTest {
+public abstract class AbstractActuatorIT extends AbstractIT {
 
     @Test
     void shouldReturnResponseFromActuatorEndpoint() {
