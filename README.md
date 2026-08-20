@@ -760,7 +760,7 @@ mvnw clean verify
 
 Once the build completes successfully, the full coverage details can be viewed by opening this file in your web browser:
 ```
-target/site/jacoco/index.html
+coverage-report/target/site/jacoco-aggregate/index.html
 ```
 This provides a convenient way to ensure that the core logic of your application is adequately covered.
 
