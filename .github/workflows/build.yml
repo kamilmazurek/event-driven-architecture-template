@@ -2,11 +2,16 @@ name: Build
 
 on:
   push:
+    branches: [ "main"]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main"]
+
+permissions:
+  contents: read
 
 jobs:
   build:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +26,12 @@ jobs:
           cache: 'maven'
 
       - name: Build and test with Maven
-        env:
-          TESTCONTAINERS_RYUK_DISABLED: true
-          MAVEN_OPTS: "-Xmx2048m"
         run: ./mvnw -B clean verify
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: ./coverage-report/target/site/jacoco-aggregate/jacoco.xml
+          fail_ci_if_error: true
