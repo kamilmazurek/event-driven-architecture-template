@@ -103,8 +103,8 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>template/Application.class</exclude>
-                        <exclude>template/api/**/*.class</exclude>
+                        <exclude>template/consumer/ConsumerApplication.class</exclude>
+                        <exclude>template/producer/ProducerApplication.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
