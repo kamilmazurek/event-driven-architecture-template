@@ -422,7 +422,7 @@ mvnw clean install -DskipITs
 ### Running the Application Locally
 
 To run the application locally, an Apache Kafka instance is required.
-You can install and run Kafka manually or connect to an existing remote instance.
+You can [run Kafka locally](https://kamilmazurek.pl/run-kafka-locally) or connect to an existing remote instance.
 For development and testing purposes, running Kafka in Docker is often the most convenient approach.
 
 The project includes a Docker Compose configuration that starts Kafka together with the Producer and Consumer services.
