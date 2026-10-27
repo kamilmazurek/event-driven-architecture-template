@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.16</version>
+        <version>4.1.2</version>
         <relativePath/>
     </parent>
 
@@ -23,6 +23,7 @@
         <java.version>21</java.version>
         <allure.version>2.35.1</allure.version>
         <allure.maven.plugin.version>2.18.0</allure.maven.plugin.version>
+        <rest-assured.version>6.3.0</rest-assured.version>
     </properties>
 
     <modules>
@@ -45,6 +46,11 @@
                 <artifactId>test-commons</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${rest-assured.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.qameta.allure</groupId>

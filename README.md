@@ -78,7 +78,7 @@ This template reduces that overhead by providing a solid foundation for building
 
 To accelerate development while maintaining quality standards, the template is configured with:
 
-* **Spring Boot 3**
+* **Spring Boot 4**
 * **Docker support**
 * **Kafka support**
 * **Integration tests**
