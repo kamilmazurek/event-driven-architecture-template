@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 
 public abstract class AbstractActuatorIT extends AbstractIT {
 
@@ -22,7 +23,7 @@ public abstract class AbstractActuatorIT extends AbstractIT {
                 .get("/actuator/health")
                 .then()
                 .statusCode(200)
-                .body(containsString("{\"status\":\"UP\"}"));
+                .body("status", equalTo("UP"));
     }
 
 }

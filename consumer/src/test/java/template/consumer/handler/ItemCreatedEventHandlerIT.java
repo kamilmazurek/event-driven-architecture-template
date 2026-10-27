@@ -2,7 +2,6 @@ package template.consumer.handler;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import template.consumer.AbstractConsumerIT;
 import template.commons.model.domain.Item;
@@ -10,8 +9,8 @@ import template.commons.model.dto.ItemDTO;
 import template.commons.model.event.ItemCreatedEvent;
 
 import java.time.Duration;
-import java.util.Arrays;
 
+import static io.restassured.RestAssured.given;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -21,9 +20,6 @@ public class ItemCreatedEventHandlerIT extends AbstractConsumerIT {
 
     @Autowired
     private KafkaTemplate<String, ItemCreatedEvent> kafkaTemplate;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Test
     void shouldHandleItemCreatedEvent() {
@@ -42,8 +38,16 @@ public class ItemCreatedEventHandlerIT extends AbstractConsumerIT {
         );
 
         //and item can be obtained from items endpoint
-        var response = restTemplate.getForEntity("/items", ItemDTO[].class);
-        assertThat(Arrays.stream(response.getBody()).map(ItemDTO::id)).contains(item.getId());
+        var items = given()
+                .when()
+                .get("/items")
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .jsonPath()
+                .getList(".", ItemDTO.class);
+        assertThat(items).extracting(ItemDTO::id).contains(item.getId());
     }
 
 }

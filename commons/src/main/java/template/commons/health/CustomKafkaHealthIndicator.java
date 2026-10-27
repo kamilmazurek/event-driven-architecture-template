@@ -1,8 +1,8 @@
 package template.commons.health;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.HealthIndicator;
+import org.springframework.boot.health.contributor.Health;
+import org.springframework.boot.health.contributor.HealthIndicator;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,8 @@ import static org.apache.kafka.clients.admin.AdminClient.create;
 import static org.apache.kafka.clients.admin.AdminClientConfig.DEFAULT_API_TIMEOUT_MS_CONFIG;
 import static org.apache.kafka.clients.admin.AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG;
 import static org.apache.kafka.clients.admin.AdminClientConfig.RETRIES_CONFIG;
-import static org.springframework.boot.actuate.health.Health.down;
-import static org.springframework.boot.actuate.health.Health.up;
+import static org.springframework.boot.health.contributor.Health.down;
+import static org.springframework.boot.health.contributor.Health.up;
 
 
 @Component("kafka")

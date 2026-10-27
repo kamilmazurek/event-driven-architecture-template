@@ -1,6 +1,5 @@
 package template.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -12,11 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +36,7 @@ public abstract class AbstractIT {
     private int port;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private JsonMapper jsonMapper;
 
     private static AdminClient adminClient;
 
@@ -64,7 +64,7 @@ public abstract class AbstractIT {
         props.put(AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         var stringDeserializer = new StringDeserializer();
-        var jsonDeserializer = new JsonDeserializer<>(valueType, objectMapper, false);
+        var jsonDeserializer = new JacksonJsonDeserializer<>(valueType, jsonMapper, false);
 
         return new KafkaConsumer<>(props, stringDeserializer, jsonDeserializer);
     }
