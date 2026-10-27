@@ -765,6 +765,17 @@ coverage-report/target/site/jacoco-aggregate/index.html
 ```
 This provides a convenient way to ensure that the core logic of your application is adequately covered.
 
+The project also includes a smoke test script that verifies the packaged applications in their deployment forms.
+It builds the JAR files, starts Kafka in Docker, runs the Producer and Consumer, waits until they are healthy and sends requests to the REST API and Actuator endpoints, checking the responses.
+It also creates an item through the Producer and verifies that the event is sent to the `item-created` topic and processed by the Consumer.
+Then it builds the Docker images, runs the containers and repeats the same checks, additionally verifying that the containers run as a non-root user:
+```console
+./smoke-test.sh
+```
+Deployments can also be tested separately with `./smoke-test.sh jar` or `./smoke-test.sh docker`. The script requires Bash, curl and Docker (on Windows, it can be run with Git Bash).
+By default, it uses ports 8080, 8081 and 9092, so make sure they are free (e.g. stop services started with Docker Compose), or set other ports with the `PRODUCER_PORT`, `CONSUMER_PORT` and `KAFKA_PORT` environment variables.
+Smoke tests are run in the CI pipeline as well, after the build.
+
 Overall, the test suite combines unit tests, which focus on domain logic and individual components, with integration tests, which verify that the producer and consumer interact correctly with external systems.
 Such an approach works well with the decoupled, message-driven design of Event-Driven Architecture.
 
